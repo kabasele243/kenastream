@@ -14,16 +14,32 @@ export class KenastreamStack extends Stack {
 
    
 
-   const orderLambda = new NodejsFunction(this, 'orderLambda', {
+  const orderLambda = new NodejsFunction(this, 'orderLambda', {
         entry: (join(__dirname, '..', 'services', 'orderService', `order.ts`)),
         handler: 'handler',
-      })
-      const orderLambdaIntegration = new LambdaIntegration(orderLambda);
-      const orderLambdaResource = this.api.root.addResource('order');
-      orderLambdaResource.addMethod('POST', orderLambdaIntegration);
+    })
+  // const getOrderLambda = new NodejsFunction(this, 'getOrderLambda', {
+  //       entry: (join(__dirname, '..', 'services', 'orderService', 'getOrder.ts')),
+  //       handler: 'handler',
+  // })
+  // const updateOrderLambda = new NodejsFunction(this, 'updateOrderLambda', {
+  //   entry: (join(__dirname, '..', 'services', 'orderService', 'updateOrder.ts')),
+  //   handler: 'handler',
+  // })
+  // const cancelOrderLambda = new NodejsFunction(this, 'cancelOrderLambda', {
+  //   entry: (join(__dirname, '..', 'services', 'orderService', 'cancelOrder.ts')),
+  //   handler: 'handler',
+  // })
 
+    const orderLambdaIntegration = new LambdaIntegration(orderLambda);
+    const orderLambdaResource = this.api.root.addResource('order');
+    orderLambdaResource.addMethod('POST', orderLambdaIntegration);
+  
+  
 
-    }
+  
+  
+  }
   
 
 }

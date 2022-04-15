@@ -4,7 +4,13 @@
 import { handler } from '../services/orderService/order';
 
 const event = {
-    "body": "eyJ0ZXN0IjoiYm9keSJ9",
+    "body":  {
+      "name": "Kabasle",
+      "address": "155 baywood",
+      "productId": "product01",
+      "quantity": "20",
+      "eventType": "order_placed"
+    },
     "resource": "/{proxy+}",
     "path": "/path/to/resource",
     "httpMethod": "POST",
@@ -128,7 +134,11 @@ const event = {
   }
 
 
-
-handler({
-    "name": "franck"
-},{})
+  // {
+  //   "name": "Kabasle",
+  //   "address": "155 baywood",
+  //   "productId": "product01",
+  //   "quantity": "20",
+  //   "eventType": "order_placed"
+  // }
+handler(event,{})
