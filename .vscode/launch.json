@@ -14,7 +14,9 @@
                 "${relativeFile}"
             ],
             "env": {
-                "AWS_REGION":"eu-west-2"
+                "AWS_REGION":"eu-west-2",
+                "TABLE_NAME": "orderItems",
+                "PRIMARY_KEY": "orderItemId"
             }
 
         }

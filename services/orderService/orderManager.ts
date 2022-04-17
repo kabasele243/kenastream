@@ -6,6 +6,7 @@ function createOrder(body: any){
         address: body.name,
         productId: body.productId,
         quantity: body.quantity,
+        orderItemId: body.orderItemId,
         orderDate: Date.now(),
         eventType: 'order_placed'
     }
