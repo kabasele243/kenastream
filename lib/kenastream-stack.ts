@@ -43,21 +43,26 @@ export class KenastreamStack extends Stack {
         ...nodeJsFunctionProps
   });
 
-  //  const getAllOrderLambda = new NodejsFunction(this, 'getAllOrderLambda', {
-  //       entry: (join(__dirname, '..', 'services', 'orderService', 'getAllOrder.ts')),
-  //       handler: 'handler',
-  // })
+   const getAllOrderLambda = new NodejsFunction(this, 'getAllOrderLambda', {
+        entry: (join(__dirname, '..', 'services', 'orderService', 'getAllOrder.ts')),
+        ...nodeJsFunctionProps
+
+  })
 
    // Grant the Lambda function read access to the DynamoDB table
    dynamoTable.grantReadWriteData(orderLambda);
+   dynamoTable.grantReadWriteData(getAllOrderLambda);
 
 
    // Integrate the Lambda functions with the API Gateway resource
    const orderLambdaIntegration = new LambdaIntegration(orderLambda);
+   const getAllOrderLambdaIntegration = new LambdaIntegration(getAllOrderLambda);
 
    // Create an API Gateway resource for each of the CRUD operations
    const orderLambdaResource = this.api.root.addResource('order');
    orderLambdaResource.addMethod('POST', orderLambdaIntegration);
+   orderLambdaResource.addMethod('GET', getAllOrderLambdaIntegration);
+
   //  const singleOrderRessource = orderLambdaResource.addResource('{id}')
     
 
