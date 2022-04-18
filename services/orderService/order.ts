@@ -32,8 +32,7 @@ const order = createOrder(item);
 
 try { 
        const saved = await db.put(params).promise();
-       console.log(saved)
-        return createResponse(200,saved);
+       return createResponse(200,saved);
         
 } catch (err) {
         return createResponse(400, err)
