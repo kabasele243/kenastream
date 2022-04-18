@@ -49,40 +49,31 @@ export class KenastreamStack extends Stack {
 
   })
 
+  const getOrderLambda = new NodejsFunction(this, 'getOrderLambda', {
+    entry: (join(__dirname, '..', 'services', 'orderService', 'getOrder.ts')),
+    ...nodeJsFunctionProps
+
+})
+
    // Grant the Lambda function read access to the DynamoDB table
    dynamoTable.grantReadWriteData(orderLambda);
    dynamoTable.grantReadWriteData(getAllOrderLambda);
+   dynamoTable.grantReadWriteData(getOrderLambda);
 
 
    // Integrate the Lambda functions with the API Gateway resource
    const orderLambdaIntegration = new LambdaIntegration(orderLambda);
    const getAllOrderLambdaIntegration = new LambdaIntegration(getAllOrderLambda);
+   const getOrderLambdaIntegration = new LambdaIntegration(getOrderLambda);
 
    // Create an API Gateway resource for each of the CRUD operations
    const orderLambdaResource = this.api.root.addResource('order');
    orderLambdaResource.addMethod('POST', orderLambdaIntegration);
    orderLambdaResource.addMethod('GET', getAllOrderLambdaIntegration);
 
-  //  const singleOrderRessource = orderLambdaResource.addResource('{id}')
-    
 
-  // const getOrderLambda = new NodejsFunction(this, 'getOrderLambda', {
-  //       entry: (join(__dirname, '..', 'services', 'orderService', 'getOrder.ts')),
-  //       handler: 'handler',
-  // })
-
-  // const updateOrderLambda = new NodejsFunction(this, 'updateOrderLambda', {
-  //   entry: (join(__dirname, '..', 'services', 'orderService', 'updateOrder.ts')),
-  //   handler: 'handler',
-  // })
-
-  // const cancelOrderLambda = new NodejsFunction(this, 'cancelOrderLambda', {
-  //   entry: (join(__dirname, '..', 'services', 'orderService', 'cancelOrder.ts')),
-  //   handler: 'handler',
-  // })
-
-    
-   
+   const singleOrderRessource = orderLambdaResource.addResource('{id}');
+   singleOrderRessource.addMethod('GET', getOrderLambdaIntegration);
   
   }
   
